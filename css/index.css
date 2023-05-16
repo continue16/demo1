@@ -1,0 +1,120 @@
+
+
+.left{
+    min-width:4%;
+    width:4.5%;
+    position: fixed;
+    background-color: pink;
+    top:20px;
+    left:20px;
+    bottom: 20px;
+   border-radius: 10px ;
+    padding-top: 10px;
+    border-left:5px ;
+    border-left: 5px solid pink;
+    box-sizing: initial;
+    transition: 0.5s;
+    overflow-x: hidden;
+}
+.left.hh{
+    width: 15%;
+}
+.left ul{
+position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    padding-left:5px;
+    padding-top: 40px;
+}
+
+.left ul li{
+  position: relative;
+    list-style: none;
+  width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+/*.left ul li b:nth-child(1){
+    position: absolute;
+    top:-60px;
+    height: 60px;
+    width: 100%;
+   background: white;
+display: none;
+}
+.left ul li b:nth-child(1)::before{
+    content:'';
+    position: absolute;
+    top:0;
+    left:0;
+    width: 99%;
+    height: 100%;
+    border-bottom-right-radius: 20px;
+    background: pink;
+}*/
+.left ul li.hh{
+    background: white;
+}
+.left ul li a{
+    position: relative;
+text-decoration: none;
+    width: 100%;
+    display: flex;
+  color: white;
+}
+.left ul li.hh a{
+    color: black;
+}
+.left ul li a .icon{
+    position: relative;
+    display:block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 70px;
+    text-align: center;
+}
+
+.left ul li a .icon ion-icon{
+    font-size: 1.5em;
+}
+.left ul li a .name{
+    position: relative;
+    display: block;
+    padding-left: 10px;
+    height: 50px;
+    line-height: 60px;
+}
+
+.out{
+   position: fixed;
+    top:20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: pink;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.out.hh{
+  background: yellow;
+}
+.out ion-icon{
+    position: absolute;
+    color: white;
+    font-size: 36px;
+    display: none;
+}
+.out ion-icon.open,
+.out.hh ion-icon.close{
+    display: block;
+}
+.out ion-icon.close,
+.out.hh ion-icon.open{
+    display:none;
+}

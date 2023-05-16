@@ -1,0 +1,165 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>预约表单</title>
+    <style>
+        {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"], input[type="reset"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input[typereset"] {
+        background-color: #f44336;
+        }
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #3e8e41;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .time-select {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .time-select select {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<form id="booking-form"  >
+    <label for="name">请输入预约人姓名:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="room">请选择预约的教室:</label>
+    <select id="room" name="room" required>
+        <option value="">请选择教室</option>
+        <option value="17101">17101</option>
+        <option value="17102">17102</option>
+        <option value="17103">17103</option>
+    </select>
+
+    <div class="date-select">
+        <label for="date">请选择预约日期:</label>
+        <input type="date" id="date" name="date" min="2023-05-12" required>
+
+    </div>
+
+    <div class="time-select">
+        <label for="start-time">请选择开始时间:</label>
+        <select id="start-time" name="start-time" required>
+            <option value="">请选择开始时间</option>
+            <option value="1">第1节课</option>
+            <option value="2">第2节课</option>
+            <option value="3">第3节课</option>
+            <option value="4">第4节课</option>
+            <option value="5">第5节课</option>
+            <option value="6">第6节课</option>
+            <option value="6">第7节课</option>
+            <option value="6">第8节课</option>
+            <option value="6">第9节课</option>
+        </select>
+
+        <label for="end-time">请选择结束时间:</label>
+        <select id="end-time" name="end-time" required>
+            <option value="">请选择结束时间</option>
+            <option value="1">第1节课</option>
+            <option value="2">第2节课</option>
+            <option value="3">第3节课</option>
+            <option value="4">第4节课</option>
+            <option value="5">第5节课</option>
+            <option value="6">第6节课</option>
+            <option value="6">第7节课</option>
+            <option value="6">第8节课</option>
+            <option value="6">第9节课</option>
+        </select>
+    </div>
+
+    <div id="error-message"></div>
+
+    <input type="submit" value="提交">
+    <input type="reset" value="重置">
+</form>
+
+<script>
+    document.getElementById("booking-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var formdata=document.getElementById("booking-form")
+        var name = document.getElementById("name").value;
+        var room = document.getElementById("room").value;
+        var date = document.getElementById("date").value;
+        var startTime = document.getElementById("start-time").value;
+        var endTime = document.getElementById("end-time").value;
+        var  sent= new XMLHttpRequest()
+         var data=new FormData(formdata)
+        sent.open('post','http://127.0.0.1:5000/formdata')
+        sent.send(data)
+        sent.onreadystatechange = function () {
+            if(sent.readyState === 4 && sent.status === 200) {
+                console.log(sent.responseText)
+                //后端返回
+
+            }
+        }
+
+        document.cookie="name="+name+"; path=/;"
+        document.cookie= "room="+room+"; path=/;"
+        document.cookie= "date="+date+"; path=/;"
+        document.cookie=" startTime="+startTime+"; path=/;"
+        document.cookie="endTime="+endTime+"; path=/;"
+
+
+        if (startTime > endTime) {
+            document.getElementById("error-message").innerHTML = "请选择正确的时间段";
+        } else {
+            document.getElementById("error-message").innerHTML = "";
+            // alert("预约成功！\n姓名：" + name + "\n教室：" + room + "\n日期：" + date + "\n时间段：" + startTime + "节到" + endTime + "节");
+            alert("提交成功，等待审核")
+        }
+    });
+
+    document.getElementById("booking-form").addEventListener("reset", function(event) {
+        document.getElementById("error-message").innerHTML = "";
+    });
+
+</script>
+</body>
+</html>

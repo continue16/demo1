@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body,html{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    table{
+        position: absolute;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);/* 阴影 */
+        border-collapse:collapse;/* 取消表格边框 */
+        left: 25%;
+        top:15%;
+        height: 70%;
+        width: 50%;
+    }
+    table,th,tr,td{
+        border-bottom:3px solid #dedede;/* 表格横线 */
+        text-align: center;
+    }
+</style>
+<body>
+<table>
+    <tr>
+        <th>17101</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+
+    </tr>
+
+    <tr>
+        <th id="1"></th>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+    </tr>
+    <tr>
+        <th id="2"></th>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+    </tr>
+    <tr>
+        <th id="3"></th>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+    </tr>
+    <tr>
+        <th id="4"></th>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+    </tr>
+    <tr>
+        <th id="5"></th>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+        <td>111</td>
+    </tr>
+</table>
+</body>
+<script>
+    var today = new Date();
+
+
+    var futureDate = new Date();
+    futureDate.setDate(today.getDate() + 14);
+    // 获取100天后的时间
+    var futureDates = new Date();
+    futureDates.setDate(today.getDate() + 40);
+
+
+    // 获取时间范围内的所有月份和日期
+    var dates = [];
+    for (var d = futureDate; d <= futureDates; d.setDate(d.getDate() + 1)) {
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        dates.push(month + "月" + day + "日");
+    }
+    var a =document.querySelectorAll('th[id]')
+    for(var i=0;i<a.length;i++){
+        a[i].innerHTML=dates[i]
+    }
+</script>
+</html>

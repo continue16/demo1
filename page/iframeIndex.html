@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    html,body{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #user{
+       display: inline;
+    }
+    #time{
+        position: absolute;
+        right: 10%;
+        display: inline;
+    }
+    #u{
+        position: absolute;
+        right: 17%;
+        display: inline;
+    }
+    .father{
+        height: 5%;
+        width: 100%;
+    }
+    .room{
+        height: 85%;
+        width: 90%;
+        margin-top:5%;
+        margin-left: 5%;
+    }
+
+
+</style>
+<body>
+<div class="father">
+用户:<span id="user"></span> <span id="u">时间:</span><span id="time"></span>
+</div>
+
+
+</div>
+</body>
+<script>
+        var a = getCookie("username");
+        function getCookie(name) {
+        var cookieValue = "";
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(name) === 0) {
+        cookieValue = cookie.substring(name.length + 1);
+        break;
+    }
+    }
+        return cookieValue;
+    }
+
+console.log(a)
+document.getElementById('user').innerHTML=a
+    function Time(){
+        var a=new Date();
+        var h=a.getHours();
+        h =h<10? '0'+h: h;
+        var m=a.getMinutes();
+        m =m<10? '0'+m: m;
+        var s=a.getSeconds();
+        s =s<10? '0'+s: s;
+        var k=  h+':'+m+':'+s;
+        document.getElementById('time').innerText=k;
+    }
+    setInterval(Time,1000);
+    Time();
+
+
+
+
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+</html>

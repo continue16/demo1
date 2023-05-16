@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body,html{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .re{
+        position: absolute;
+         width: 70%;
+         top:10%;
+         left: 10%;
+         height: 60%;
+        padding: 5%;
+    }
+    input{
+        background: #8000ff;
+    }
+  table,th,tr,td{
+
+      text-align: center;
+  }
+table{
+    height: 25%;
+    border-bottom: 1px solid;
+}
+td,th{
+    width: 10%;
+}
+</style>
+<body>
+<div class="re" id="rea">
+    <table id="fa">
+        <tr>
+            <th>预约人姓名</th>
+            <th>预约教室</th>
+            <th>预约日期</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th colspan="2">当前状态</th>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+     let xhr= new XMLHttpRequest();
+     xhr.open('get','http://127.0.0.1:5000/add')
+     xhr.send();
+     xhr.onreadystatechange = function () {
+         if (xhr.readyState === 4 && xhr.status === 200) {
+             //后端返回
+
+
+             let data = xhr.responseText;
+
+             if (data.length >3 ) {
+                 var aa = data.split("'").join("");
+                 var bb = aa.split("[").join("");
+                 var cc = bb.split("]").join("");
+                 let nu = cc.split(',')
+                 let fa = document.getElementById('fa')
+                 let uu = nu.length;
+                 let leng = (nu.length) / 5;
+                 let upo = 1;
+                 let demo = 1;
+                 for (let i = 0; i < leng; i++) {
+                     let m = 0
+                     let tr = document.createElement('tr');
+                     let u = i * 5;
+                     uu = u + 5
+                     for (let j = u; j < uu + 2; j++) {
+                         if (m === 0) {
+                             nu[j] = eval("'" + nu[j] + "'");
+                             m = 1
+                         }
+                         if (j === uu) {
+                             if (i === 0) {
+                                 upo--;
+                             } else {
+                                 upo = upo + 5;
+                             }
+                             let td = document.createElement('td')
+                             td.innerHTML = "<input value='同意' type='button' class='uk'  id='" + nu[upo] + "''>"
+                             tr.appendChild(td)
+                         } else if (j === uu + 1) {
+                             if (i === 0) {
+                                 demo--;
+                             } else {
+                                 demo = demo + 5;
+                             }
+                             let td = document.createElement('td')
+                             td.innerHTML = "<input value='拒绝' type='button'  class='uka' id='" + nu[demo] + "s' >"
+                             tr.appendChild(td)
+                         } else {
+                             let td = document.createElement('td')
+                             td.innerHTML = nu[j].split('"').join('')
+                             tr.appendChild(td)
+                         }
+                     }
+                     fa.appendChild(tr)
+                     let aaa = document.querySelectorAll('.uk')
+                     for (let i = 0; i < aaa.length; i++) {
+                         let all = aaa[i].getAttribute('id')
+                         document.getElementById(all).addEventListener('click', function () {
+                             var text = {
+                                 "name": nu[0].split('"').join(''),
+                                 "room": nu[1].split('"').join(''),
+                                 "date": nu[2].split('"').join(''),
+                                 "start-time": nu[3].split('"').join(''),
+                                 "end-time": nu[4].split('"').join(''),
+                             }
+                             var sent = new XMLHttpRequest()
+                             // var data = new FormData(nu)
+                             sent.open('post', 'http://127.0.0.1:5000/addclass')
+                             sent.setRequestHeader("Content-type", "application/json");
+                             sent.send(JSON.stringify(text))
+                             sent.onreadystatechange = function () {
+                                 if (sent.readyState === 4 && sent.status === 200) {
+                                     console.log(sent.responseText)
+
+                                     //后端返回
+                                     // let data = xhr.responseText;
+                                     // var aa = data.split("'").join("");
+                                     // var bb = aa.split("[").join("");
+                                     // var cc = bb.split("]").join("");
+                                     // let nu = cc.split(',')
+                                     // var name=nu[0]
+                                     // var room=nu[1]
+                                     // var date=nu[2]
+                                     // var startTime=nu[3]
+                                     // var endTime=nu[4]
+                                     // document.cookie="name="+name+"; path=/;"
+                                     // document.cookie= "room="+room+"; path=/;"
+                                     // document.cookie= "date="+date+"; path=/;"
+                                     // document.cookie=" startTime="+startTime+"; path=/;"
+                                     // document.cookie="endTime="+endTime+"; path=/;"
+                                     // // location.reload();
+
+                                 }
+                             }
+
+                         })
+                         let he = document.querySelectorAll('.uka')
+                         console.log("删除")
+                         for (let i = 0; i < he.length; i++) {
+                             let all = he[i].getAttribute('id')
+                             document.getElementById(all).addEventListener('click', function () {
+                                 var sent = new XMLHttpRequest()
+                                 var data = new FormData()
+                                 data.append('name', all)
+                                 sent.open('post', 'http://127.0.0.1:5000/ggb')
+                                 sent.send(data)
+                                 sent.onreadystatechange = function () {
+                                     if (sent.readyState === 4 && sent.status === 200) {
+                                         console.log(sent.responseText)
+                                         //后端返回
+
+                                     }
+                                 }
+                             })
+                             console.log(all)
+                         }
+
+                     }
+                 }
+             }
+             else{
+                 console.log('无数据')
+             }
+         }
+     }
+    // let name=''
+    // let room=''
+    // let date=''
+    // let startTime=''
+    // let endTime=''
+    // name = getCookie("name");
+    // room = getCookie("room");
+    // date = getCookie("date");
+    // startTime= getCookie("startTime");
+    // endTime= getCookie("endTime");
+    // function getCookie(name) {
+    //     var cookieValue = "";
+    //     var cookies = document.cookie.split(";");
+    //     console.log(cookies.length)
+    //     for (var i = 0; i < cookies.length; i++) {
+    //         var cookie = cookies[i].trim();
+    //         if (cookie.indexOf(name) === 0) {
+    //             cookieValue = cookie.substring(name.length + 1);
+    //             break;
+    //         }
+    //     }
+    //     return cookieValue;
+    // }
+
+
+
+
+
+</script>
+</html>

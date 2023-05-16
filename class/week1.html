@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body,html{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .father{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    table{
+        position: absolute;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);/* 阴影 */
+        border-collapse:collapse;/* 取消表格边框 */
+        left: 25%;
+        top:15%;
+        /*height: 70%;*/
+        min-height: 20%;
+        width: 70%;
+    }
+    table,th,tr,td{
+        border-bottom:3px solid #dedede;/* 表格横线 */
+        text-align: center;
+    }
+    .abc{
+       width: 5%;
+       position: absolute;
+       left: 25%;
+        top: 10%;
+    }
+</style>
+<body>
+
+<div class="father" id="father">
+   <div class="abc">
+        <select id="id_class">
+        <option  value="17101">17101</option>
+        <option  value="17102">17102</option>
+        <option  value="17103">17103</option>
+        <option  value="17104">17104</option>
+    </select>
+   </div>
+<table id="room">
+    <tr>
+        <th id="number">17101</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+    </tr>
+</table>
+</div>
+</body>
+<script>
+   var up =document.getElementById('id_class');
+   up.addEventListener('change',function () {
+       let k=document.getElementsByClassName('ly');
+       console.log(k!=null)
+      if(k.length!==0){
+          console.log(k.length)
+       for(let i=0;i<k.length;i++){
+           k[i].remove()
+       }
+}
+       let today = new Date();
+       // 获取100天后的时间
+       var tYear = today.getFullYear();
+       let futureDate = new Date();
+       futureDate.setDate(today.getDate() + 40);
+       // 获取时间范围内的所有月份和日期
+       let dates = [];
+       let date=[]
+       for (let d = today; d <= futureDate; d.setDate(d.getDate() + 1)) {
+           let month = d.getMonth() + 1;
+           let day = d.getDate();
+           dates.push(month + "月" + day + "日");
+           date.push(tYear+"-"+month + "-" + day);
+       }
+       let id = up.value
+       document.getElementById('number').innerHTML = id
+       console.log(up.value)
+       let xhr=new XMLHttpRequest();
+       xhr.open('get','http://127.0.0.1:5000/end')
+       xhr.send()
+       xhr.onreadystatechange = function () {
+           if (xhr.readyState === 4 && xhr.status === 200) {
+               //后端返回
+               let data = xhr.responseText
+               let aa = data.split("'").join("");
+               let bb = aa.split("[").join("");
+               let cc = bb.split("]").join("");
+               let nu = cc.split(',')
+               let table = document.getElementById('room')
+               for(let i=0;i<6;i++){
+                   let tr=document.createElement('tr');
+                   tr.setAttribute("class",'ly')
+                   for( let j=0;j<10;j++){
+                       let td=document.createElement('td');
+                       if(j===0){
+                           td.innerHTML=dates[i];
+                           td.setAttribute('class',data[i])
+                       }
+                       else{
+                      nu[j]=eval("'" + nu[j] + "'");
+                       td.innerHTML= nu[j].split('"').join('');
+                       }
+                       tr.appendChild(td)
+                   }
+                   table.appendChild(tr)
+                }
+           }
+       }
+
+   })
+
+
+    // let a =document.querySelectorAll('th[id]')
+    // for(let i=0;i<a.length;i++){
+    //     // a[i].innerHTML=dates[i];
+    // }
+    // let xhr=new XMLHttpRequest();
+    // xhr.open('get','http://127.0.0.1:5000/end')
+    // xhr.send()
+    // xhr.onreadystatechange = function (){
+    // if(xhr.readyState === 4 && xhr.status === 200) {
+    //     //后端返回
+    //     let data=xhr.responseText
+    //     let aa = data.split("'").join("");
+    //     let bb = aa.split("[").join("");
+    //     let cc = bb.split("]").join("");
+    //     let nu = cc.split(',')
+    //     let table=document.getElementById('room')
+       // for(let i=0;i<6;i++){
+       //      let tr=document.createElement('tr');
+       //     for( let j=0;j<10;j++){
+       //         let td=document.createElement('td');
+       //         if(j===0){
+       //             td.innerHTML=dates[i];
+       //         }
+       //         else{
+       //        nu[j]=eval("'" + nu[j] + "'");
+       //         td.innerHTML= nu[j].split('"').join('');
+       //         }
+       //         tr.appendChild(td)
+       //     }
+       //     table.appendChild(tr)
+       //  }
+    // }
+    // }
+
+    // let name=''
+    // let room=''
+    // let date=''
+    // let startTime=''
+    // let endTime=''
+    // name = getCookie("name");
+    // room = getCookie("room");
+    // date = getCookie("date");
+    // startTime= getCookie("startTime");
+    // endTime= getCookie("endTime");
+    // function getCookie(name) {
+    //     var cookieValue = "";
+    //     var cookies = document.cookie.split(";");
+    //     console.log(cookies.length)
+    //     for (var i = 0; i < cookies.length; i++) {
+    //         var cookie = cookies[i].trim();
+    //         if (cookie.indexOf(name) === 0) {
+    //             cookieValue = cookie.substring(name.length + 1);
+    //             break;
+    //         }
+    //     }
+    //     return cookieValue;
+    // }
+
+</script>
+</html>
